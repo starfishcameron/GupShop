@@ -41,9 +41,10 @@ export default async function handler(
       ],
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: 'https:/:camerongupta.com',
-
-    return res.status(200).json({ id: session.id });
+cancel_url: 'https://camerongupta.com',
+  });
+  return res.status(200).json({ id: session.id });
+  
   } catch (error) {
     console.error(error);
     return res.status(500).json({ error: 'Unable to create checkout session' });
