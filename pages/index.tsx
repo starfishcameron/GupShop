@@ -23,11 +23,10 @@ export default function Home() {
   };
 
   const numericAmount = parseFloat(amount || '0');
-
-const surchargePercent = 0.075;
-const totalCents = Math.round(numericAmount * (1 + surchargePercent) * 100);
-const formattedTotal = (totalCents / 100).toFixed(2);
+const formattedAmount = numericAmount.toFixed(2);
 const disabled = isNaN(numericAmount) || numericAmount < 1 || loading;
+
+return (
     <main style={{ padding: '2rem', maxWidth: '400px', margin: '0 auto' }}>
       <h1>GupShop</h1>
       <label htmlFor="amount">Amount (USD):</label>
@@ -40,15 +39,16 @@ const disabled = isNaN(numericAmount) || numericAmount < 1 || loading;
         onChange={(e) => setAmount(e.target.value)}
         style={{ width: '100%', marginBottom: '1rem' }}
       />
-   
-   
+
       <button
         onClick={handleCheckout}
         disabled={disabled}
         style={{ padding: '0.5rem 1rem', backgroundColor: '#6366F1', color: 'white', border: 'none', width: '100%' }}
       >
-        {loading ? 'Processing...' : `Pay $${formattedTotal} (plus 7.5% fee)`}
+        {loading ? 'Processing...' : `Pay $${formattedAmount} (plus 7.5% fee)`}
       </button>
     </main>
-  );
+);
+
+
 }
