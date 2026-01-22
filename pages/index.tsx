@@ -3,9 +3,8 @@ import { loadStripe } from '@stripe/stripe-js';
 
 export default function Home() {
   const [amount, setAmount] = useState('1.00');
-  const [description, setDescription] = useState('Donation');
   const [loading, setLoading] = useState(false);
-
+ const description = 'Donation';
   const handleCheckout = async () => {
     setLoading(true);
     const response = await fetch('/api/checkout', {
@@ -24,12 +23,11 @@ export default function Home() {
   };
 
   const numericAmount = parseFloat(amount || '0');
-  const surchargePercent = 0.075;
-  const total = numericAmount + numericAmount * surchargePercent;
-  const formattedTotal = total.toFixed(2);
-  const disabled = isNaN(numericAmount) || numericAmount < 1 || loading;
 
-  return (
+const surchargePercent = 0.075;
+const totalCents = Math.round(numericAmount * (1 + surchargePercent) * 100);
+const formattedTotal = (totalCents / 100).toFixed(2);
+const disabled = isNaN(numericAmount) || numericAmount < 1 || loading;
     <main style={{ padding: '2rem', maxWidth: '400px', margin: '0 auto' }}>
       <h1>GupShop</h1>
       <label htmlFor="amount">Amount (USD):</label>
@@ -42,14 +40,8 @@ export default function Home() {
         onChange={(e) => setAmount(e.target.value)}
         style={{ width: '100%', marginBottom: '1rem' }}
       />
-      <label htmlFor="description">Description:</label>
-      <input
-        id="description"
-        type="text"
-        value={description}
-        onChange={(e) => setDescription(e.target.value)}
-        style={{ width: '100%', marginBottom: '1rem' }}
-      />
+   
+   
       <button
         onClick={handleCheckout}
         disabled={disabled}
