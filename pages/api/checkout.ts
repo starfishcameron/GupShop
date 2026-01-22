@@ -32,7 +32,7 @@ export default async function handler(
           price_data: {
             currency: process.env.NEXT_PUBLIC_CURRENCY || 'usd',
             product_data: {
-              name: description || 'GupShop purchase',
+              name: 'Donation',
             },
             unit_amount: totalInCents,
           },
@@ -41,8 +41,7 @@ export default async function handler(
       ],
       mode: 'payment',
       success_url: `${process.env.NEXT_PUBLIC_SUCCESS_URL}?session_id={CHECKOUT_SESSION_ID}`,
-      cancel_url: process.env.NEXT_PUBLIC_CANCEL_URL as string,
-    });
+      cancel_url: 'https:/:camerongupta.com',
 
     return res.status(200).json({ id: session.id });
   } catch (error) {
